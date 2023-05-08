@@ -1,12 +1,11 @@
 #include "file.h"
 
 /**
- * main - copies the content of a file to another file
+ * main - Copies the file contents of a to another file.
+ * @argc: The number of arguments feed to the program.
+ * @argv: An array of pointers to the arguments.
  *
- * @argc: argument count
- * @argv: argument vector
- *
- * Return: 0 on success, exit with code 97-100 on failure
+ * Return: 0 on success.
  */
 int main(int argc, char *argv[])
 {
@@ -24,8 +23,7 @@ int main(int argc, char *argv[])
 	r = read(from, buffer, 1024);
 	to = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
 
-	while (r > 0)
-	{
+	do {
 		if (from == -1 || r == -1)
 		{
 			dprintf(STDERR_FILENO,
@@ -43,7 +41,8 @@ int main(int argc, char *argv[])
 		}
 		r = read(from, buffer, 1024);
 		to = open(argv[2], O_WRONLY | O_APPEND);
-	}
+
+	} while (r > 0);
 	free(buffer);
 	close_file(from);
 	close_file(to);
